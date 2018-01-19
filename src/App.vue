@@ -1,6 +1,6 @@
 <template lang="jade">
   #app.allapp
-      headerNav(v-if="doneTodos")
+      headerNav(v-if="getTitleStatus")
       router-view
 </template>
 <script lang="ts">
@@ -12,22 +12,18 @@ import {Component, Watch, Provide} from 'vue-property-decorator'
   components: {
     headerNav
   },
-  computed: mapGetters(['doneTodos'])
+  computed: mapGetters(['getTitleStatus'])
 })
 export default class App extends Vue {
-  @Watch('doneTodos', { immediate: true, deep: true })
+  @Watch('getTitleStatus', { immediate: true, deep: true })
   onChildChanged (val: boolean, oldVal: boolean) {
     console.log(val);
     console.log('自动监听');
   }
   @Provide() foo = 'foo';
-  doneTodos: string;
+  getTitleStatus: boolean;
   mounted () {
-    enum Color {Red, Green, Blue};
-    console.log(Color.Red);
-    // console.log('进入生命周期');
-    this.$store.dispatch('setLeftNav', true);
-    console.log(this.foo);
+    
   }
 }
 </script>
